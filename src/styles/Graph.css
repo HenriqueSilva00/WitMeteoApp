@@ -1,0 +1,57 @@
+.graph-section {
+  background-color: #ff0000;
+  border-radius: 10px;
+  padding: 20px 40px; /* 20px vertical, 40px horizontal */
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  max-width: 1700px; /* largura máxima da seção */
+  margin: 20px auto; /* centraliza horizontalmente */
+  font-family: "Arial", sans-serif;
+  box-sizing: border-box; /* garante que o padding não extrapole o max-width */
+}
+.graph-section h2 {
+  text-align: center;
+  margin-bottom: 15px;
+  color: #333;
+  font-size: 1.8rem;
+}
+
+.day-selector {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 20px;
+  gap: 10px;
+}
+
+.day-selector label {
+  font-weight: bold;
+  color: #555;
+}
+
+.day-selector select {
+  padding: 5px 10px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  background-color: #f9f9f9;
+  font-size: 1rem;
+  transition: all 0.2s ease-in-out;
+}
+
+.day-selector select:hover {
+  border-color: #8884d8;
+  background-color: #fff;
+}
+
+p {
+  text-align: center;
+  color: #666;
+  font-size: 1rem;
+  margin-top: 10px;
+}
+
+/* Gráfico Recharts */
+.recharts-surface {
+  border-radius: 8px;
+  background-color: #f7f7f7;
+  padding: 10px;
+}

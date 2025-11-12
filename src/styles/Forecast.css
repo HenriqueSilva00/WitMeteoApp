@@ -1,0 +1,211 @@
+/* Cabeçalho com título à esquerda e switch à direita */
+.forecast-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 4.5rem;
+  margin-bottom: 3rem;
+  flex-wrap: wrap;
+}
+
+.forecast-header h1 {
+  font-size: 1.8rem;
+  font-weight: 600;
+  color: #1b3b6f;
+  margin-top: 2.5rem;
+  margin-left: 1.5rem;
+}
+
+.unit-toggle {
+  position: relative;
+  width: 100px;
+  height: 40px;
+  background-color: #1b3b6f;
+  border-radius: 9999px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 5px;
+  cursor: pointer;
+  user-select: none;
+  margin-right: 5rem;
+}
+
+.toggle-option {
+  z-index: 2;
+  width: 50%;
+  text-align: center;
+  color: #fff;
+  font-weight: bold;
+  transition: color 0.3s ease;
+}
+
+.toggle-option.active {
+  color: #1b3b6f;
+}
+
+.toggle-slider {
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  width: 48%;
+  height: 34px;
+  background-color: #fff;
+  border-radius: 9999px;
+  transition: transform 0.5s ease;
+}
+
+/* Mover o slider para direita se unit = imperial */
+.unit-toggle .toggle-option.active + .toggle-slider {
+  transform: translateX(97%);
+}
+
+/* Alternativa usando data-unit do container */
+.unit-toggle[data-unit="imperial"] .toggle-slider {
+  transform: translateX(50%);
+}
+
+.unit-toggle:hover .toggle-slider {
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Grid de cards */
+.forecast-grid {
+  display: flex;
+  justify-content: center;
+  align-items: stretch;
+  gap: 4rem;
+  flex-wrap: wrap;
+  padding: 1rem 0;
+}
+
+.forecast-card {
+  background-color: #e3f2fd;
+  padding: 1rem;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  width: 250px;
+  text-align: center;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.forecast-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25);
+}
+
+.forecast-card img {
+  width: 80px;
+  height: 80px;
+}
+
+.forecast-card .date {
+  font-weight: 600;
+  text-transform: capitalize;
+  color: #333;
+  margin-bottom: 0.5rem;
+}
+
+.forecast-card .temp {
+  font-size: 1.8rem;
+  font-weight: bold;
+  margin: 0.4rem 0;
+  color: #0d47a1;
+}
+
+.forecast-card .desc {
+  text-transform: capitalize;
+  color: #555;
+  margin-bottom: 1rem;
+}
+
+.forecast-card .details {
+  font-size: 0.9rem;
+  color: #333;
+  line-height: 1.4;
+  text-align: left;
+}
+
+/* === RESPONSIVIDADE === */
+
+/* TABLET - até 1024px */
+@media (max-width: 1024px) {
+  .forecast-header {
+    margin-top: 6rem;
+    margin-bottom: 1rem;
+  }
+
+  .forecast-header h1 {
+    font-size: 1.6rem;
+    margin-left: 1.5rem;
+  }
+
+  .unit-toggle {
+    margin-right: 2rem;
+    width: 90px;
+    height: 36px;
+  }
+
+  .toggle-slider {
+    height: 32px;
+    width: 46%;
+  }
+
+  .forecast-grid {
+    margin-bottom: 5rem;
+  }
+
+  .forecast-card {
+    width: 240px;
+    padding: 0.8rem;
+  }
+
+  .forecast-card .temp {
+    font-size: 1.6rem;
+  }
+}
+
+/* TELEMÓVEL - até 768px */
+@media (max-width: 768px) {
+  .forecast-header {
+    flex-direction: column;
+    align-items: center;
+    margin-top: 6rem;
+    margin-bottom: 1rem;
+  }
+
+  .forecast-header h1 {
+    font-size: 1.4rem;
+    margin-left: 0;
+    margin-bottom: 1rem;
+    text-align: center;
+  }
+
+  .unit-toggle {
+    margin-right: 0;
+    width: 120px;
+    height: 36px;
+  }
+
+  .toggle-slider {
+    height: 32px;
+    width: 48%;
+  }
+
+  .forecast-grid {
+    gap: 2rem;
+  }
+
+  .forecast-card {
+    width: 300px;
+    padding: 0.6rem;
+  }
+
+  .forecast-card .temp {
+    font-size: 1.4rem;
+  }
+
+  .forecast-card .details {
+    font-size: 0.8rem;
+  }
+}
