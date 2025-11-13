@@ -8,18 +8,23 @@ import MapView from "./pages/Map/MapView";
 import { WeatherData } from "./types";
 
 const App: React.FC = () => {
-  const [city, setCity] = useState(""); // cidade selecionada
+  const [city, setCity] = useState("Londres"); // cidade selecionada
   const [forecast, setForecast] = useState<WeatherData[]>([]); // forecast completo
   const [unit, setUnit] = useState<"metric" | "imperial">("metric"); // unidade de temperatura
   const [forecastFull, setForecastFull] = useState<WeatherData[]>([]); // todos os registros para o gráfico
+  const [menuOpen, setMenuOpen] = useState(false);
 
   return (
     <Router>
       <div className="min-h-screen flex flex-col bg-gray-50">
         {/* Passa setCity para o Navbar */}
-        <Navbar setCity={setCity} />
+        <Navbar
+          setCity={setCity}
+          menuOpen={menuOpen}
+          setMenuOpen={setMenuOpen}
+        />
 
-        <main className="flex-grow p-6">
+        <main className={`flex-grow p-6 ${menuOpen ? "blurred" : ""}`}>
           <Routes>
             {/* Passa city, forecast e setForecast para o Forecast */}
             <Route
@@ -43,7 +48,10 @@ const App: React.FC = () => {
               element={<Graph forecastFull={forecastFull} unit={unit} />}
             />
 
-            <Route path="/map" element={<MapView />} />
+            <Route
+              path="/map"
+              element={<MapView forecastFull={forecastFull} unit={unit} />}
+            />
           </Routes>
         </main>
 

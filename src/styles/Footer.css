@@ -1,19 +1,33 @@
-/* Footer.css */
-
 footer {
   position: fixed;
   bottom: 0;
   left: 0;
-  width: 100%;
-  background-color: #1b3b6f; /* azul escuro igual à navbar */
-  color: #ffffff; /* texto claro */
+  right: 0; /* substitui width: 100% */
+
+  color: #ffffff;
   text-align: center;
   padding: 1rem 0;
-  box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 -1px 0 #d2d9e2; /* linha fina no topo */
   z-index: 1000;
   font-size: 0.9rem;
+  overflow-x: hidden; /* evita overflow horizontal */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 0.2rem; /* espaçamento discreto entre linhas */
 }
 
 footer p {
   margin: 0;
+  line-height: 1.2;
+}
+
+footer p:first-child {
+  font-weight: 600; /* destaque para WeatherApp */
+}
+
+footer p:last-child {
+  font-weight: 400;
+  color: #a3b0c0; /* subtom discreto para subtítulo */
+  font-size: 0.85rem;
 }

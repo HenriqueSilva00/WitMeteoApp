@@ -3,10 +3,16 @@ import "../styles/Footer.css";
 
 const Footer: React.FC = () => {
   return (
-    <footer>
-      <p>
-        © {new Date().getFullYear()} WeatherApp — Developed for WIT Challenge
-      </p>
+    <footer className="footer">
+      <div className="footer-content">
+        <p className="footer-text">
+          &copy; {new Date().getFullYear()} WeatherApp
+        </p>
+        <p className="footer-subtext">
+          Developed for <strong>WIT Challenge</strong> — Developer:{" "}
+          <strong>Henrique Silva</strong>
+        </p>
+      </div>
     </footer>
   );
 };

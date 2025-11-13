@@ -14,4 +14,10 @@ export interface WeatherData {
   rain?: { "3h"?: number };
   snow?: { "3h"?: number };
   visibility: number;
+
+  // Coordenadas da cidade
+  coord: {
+    lat: number;
+    lon: number;
+  };
 }

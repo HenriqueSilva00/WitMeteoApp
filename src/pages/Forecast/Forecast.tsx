@@ -41,11 +41,22 @@ const Forecast: React.FC<ForecastProps> = ({
         if (data.cod !== "200") {
           setError(data.message);
         } else {
-          // Guarda todos os registros para o gráfico
-          setForecastFull(data.list);
+          // Adiciona coordenadas a cada item do forecast
+          const forecastWithCoord: WeatherData[] = data.list.map(
+            (item: any) => ({
+              ...item,
+              coord: {
+                lat: data.city.coord.lat,
+                lon: data.city.coord.lon,
+              },
+            })
+          );
 
-          // Pega apenas o registro das 12h00 para o forecast
-          const dailyNoon = data.list.filter((f: any) =>
+          // Guarda todos os registros para o gráfico (com coordenadas)
+          setForecastFull(forecastWithCoord);
+
+          // Pega apenas o registro das 12h00 para o forecast diário
+          const dailyNoon = forecastWithCoord.filter((f) =>
             f.dt_txt.includes("12:00:00")
           );
           setForecast(dailyNoon.slice(0, 5));
@@ -70,19 +81,19 @@ const Forecast: React.FC<ForecastProps> = ({
   return (
     <section className="forecast-section">
       <div className="forecast-header">
-        <h1>5-Day Forecast for {city}</h1>
+        <h1>📍{city}</h1>
         <div className="unit-toggle" data-unit={unit}>
           <span
             className={`toggle-option ${unit === "metric" ? "active" : ""}`}
             onClick={() => setUnit("metric")}
           >
-            °C
+            Metric (°C)
           </span>
           <span
             className={`toggle-option ${unit === "imperial" ? "active" : ""}`}
             onClick={() => setUnit("imperial")}
           >
-            °F
+            Imperial (°F)
           </span>
           <div className="toggle-slider" />
         </div>

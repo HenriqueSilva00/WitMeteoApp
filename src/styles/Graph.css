@@ -1,26 +1,37 @@
 .graph-section {
-  background-color: #ff0000;
-  border-radius: 10px;
-  padding: 20px 40px; /* 20px vertical, 40px horizontal */
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  max-width: 1700px; /* largura máxima da seção */
-  margin: 20px auto; /* centraliza horizontalmente */
-  font-family: "Arial", sans-serif;
-  box-sizing: border-box; /* garante que o padding não extrapole o max-width */
-}
-.graph-section h2 {
-  text-align: center;
-  margin-bottom: 15px;
-  color: #333;
-  font-size: 1.8rem;
+  width: 100%;
+  height: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  box-sizing: border-box;
+  background-color: #f8f8f8;
 }
 
+/* Header com título e seletor */
+.graph-header {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  margin-top: 4.5rem;
+  margin-bottom: 3rem;
+}
+
+.graph-header h1 {
+  font-size: 1.8rem;
+  font-weight: 600;
+  color: #1b3b6f;
+  margin-top: 2.5rem;
+  margin-left: 1.5rem;
+}
+
+/* Seletor logo abaixo do título */
 .day-selector {
   display: flex;
-  justify-content: center;
   align-items: center;
-  margin-bottom: 20px;
-  gap: 10px;
+  gap: 1rem;
+  margin-left: 1.5rem;
 }
 
 .day-selector label {
@@ -29,7 +40,7 @@
 }
 
 .day-selector select {
-  padding: 5px 10px;
+  padding: 0.5rem 1rem;
   border-radius: 6px;
   border: 1px solid #ccc;
   background-color: #f9f9f9;
@@ -42,16 +53,99 @@
   background-color: #fff;
 }
 
-p {
-  text-align: center;
-  color: #666;
-  font-size: 1rem;
-  margin-top: 10px;
+/* Container do gráfico */
+.graph-container {
+  width: 100%;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  padding: 1rem;
+  margin-top: 1rem;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 
-/* Gráfico Recharts */
-.recharts-surface {
+/* Wrapper do gráfico */
+.recharts-wrapper {
+  width: 100%;
   border-radius: 8px;
-  background-color: #f7f7f7;
-  padding: 10px;
+  padding: 1rem;
+  box-sizing: border-box;
+}
+
+.recharts-surface {
+  width: 100% !important;
+  height: 100% !important;
+}
+
+/* ============================= */
+/* RESPONSIVIDADE */
+/* ============================= */
+
+/* Tablets (<=1024px) */
+@media (max-width: 1024px) {
+  .graph-header h1 {
+    font-size: 1.6rem;
+    margin-left: 1rem;
+  }
+
+  .day-selector {
+    flex-direction: row;
+    gap: 0.8rem;
+    margin-left: 1rem;
+  }
+
+  .day-selector select {
+    font-size: 0.95rem;
+    padding: 0.45rem 0.9rem;
+  }
+
+  .graph-container {
+    height: 32rem;
+    padding: 0.8rem;
+  }
+
+  .recharts-wrapper {
+    height: 28rem;
+  }
+}
+
+/* Telemóveis (<=768px) */
+@media (max-width: 768px) {
+  .graph-header {
+    align-items: center;
+    text-align: center;
+    margin-top: 3.5rem;
+  }
+
+  .graph-header h1 {
+    font-size: 1.4rem;
+    margin-top: 4rem;
+  }
+
+  .day-selector {
+    flex-direction: column;
+    align-items: center;
+    margin: 0 auto;
+    gap: 0.8rem;
+  }
+
+  .day-selector label {
+    font-size: 0.95rem;
+  }
+
+  .day-selector select {
+    font-size: 0.9rem;
+    padding: 0.4rem 0.8rem;
+  }
+
+  .graph-container {
+    padding: 0.6rem;
+  }
+
+  .recharts-wrapper {
+    height: 22rem;
+  }
 }
