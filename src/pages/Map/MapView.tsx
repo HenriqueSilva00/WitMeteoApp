@@ -3,13 +3,18 @@ import "../../styles/MapView.css";
 import { MapContainer, TileLayer, useMap } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import { WeatherData } from "../../types";
-import "leaflet/dist/leaflet.css";
 import * as L from "leaflet";
 import "leaflet.heat";
 
 interface MapViewProps {
   forecastFull: WeatherData[];
   unit: "metric" | "imperial";
+  error?: string;
+}
+
+interface LeafletHeatLayer extends L.Layer {
+  addTo(map: L.Map): this;
+  remove(): this;
 }
 
 declare module "leaflet" {
@@ -21,7 +26,12 @@ const Heatmap: React.FC<{ points: [number, number, number][] }> = ({
 }) => {
   const map = useMap();
   useEffect(() => {
-    const heat = L.heatLayer(points, { radius: 40, blur: 30, maxZoom: 17 });
+    const heat = L.heatLayer(points, {
+      radius: 25,
+      blur: 20,
+      minOpacity: 0.3,
+      maxZoom: 10,
+    });
     heat.addTo(map);
 
     return () => {
@@ -33,24 +43,37 @@ const Heatmap: React.FC<{ points: [number, number, number][] }> = ({
 };
 
 const MapView: React.FC<MapViewProps> = ({ forecastFull, unit }) => {
-  // Filtra os pontos válidos
   const points: [number, number, number][] = forecastFull
     .filter(
       (d) => d.coord && d.coord.lat !== undefined && d.coord.lon !== undefined
     )
-    .map((d) => [d.coord!.lat, d.coord!.lon, 15]);
+    .map((d) => {
+      const intensity =
+        unit === "metric" ? d.main.temp : (d.main.temp - 32) * (5 / 9);
+      return [d.coord.lat, d.coord.lon, intensity];
+    });
 
-  console.log("Heatmap points:", points);
-
-  // Determina o centro da cidade (primeira coordenada válida)
   const cityCenter: [number, number] =
-    points.length > 0 ? [points[0][0], points[0][1]] : [40.0, -8.0]; // fallback
+    points.length > 0 ? [points[0][0], points[0][1]] : [40.0, -8.0];
+
+  const RecenterMap: React.FC = () => {
+    const map = useMap();
+    useEffect(() => {
+      if (points.length > 0) {
+        map.setView([points[0][0], points[0][1]], 12, { animate: true });
+      } else {
+        map.setView([40.0, -8.0], 5, { animate: true }); // fallback se não houver pontos
+      }
+    }, [points, map]);
+    return null;
+  };
 
   return (
     <div className="map-container">
       <MapContainer center={cityCenter} zoom={12} className="leaflet-container">
         <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
         <Heatmap points={points} />
+        <RecenterMap />
       </MapContainer>
     </div>
   );

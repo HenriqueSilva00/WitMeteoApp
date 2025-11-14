@@ -2,6 +2,9 @@ import React, { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import "../styles/NavBar.css";
 import WeatherIcon from "../assets/WeatherIcon.png";
+import ForecastIcon from "../assets/Forecast.png";
+import GraphIcon from "../assets/graph.png";
+import MapIcon from "../assets/Map.png";
 
 interface NavbarProps {
   setCity: (city: string) => void;
@@ -15,9 +18,9 @@ const Navbar: React.FC<NavbarProps> = ({ setCity, menuOpen, setMenuOpen }) => {
   const [lastCity, setLastCity] = useState("");
 
   const links = [
-    { name: "Forecast", path: "/", icon: "🌤️" },
-    { name: "Graph", path: "/graph", icon: "📈" },
-    { name: "Map", path: "/map", icon: "🗺️" },
+    { name: "Forecast", path: "/", icon: ForecastIcon },
+    { name: "Graph", path: "/graph", icon: GraphIcon },
+    { name: "Map", path: "/map", icon: MapIcon },
   ];
 
   const handleSearch = (e: React.FormEvent) => {
@@ -26,6 +29,11 @@ const Navbar: React.FC<NavbarProps> = ({ setCity, menuOpen, setMenuOpen }) => {
     setCity(query); // envia para o App
     setLastCity(query);
     setQuery("");
+    setMenuOpen(false); // fecha o menu após a pesquisa
+  };
+
+  const handleLinkClick = () => {
+    setMenuOpen(false); // fecha o menu ao clicar em um link
   };
 
   return (
@@ -33,18 +41,23 @@ const Navbar: React.FC<NavbarProps> = ({ setCity, menuOpen, setMenuOpen }) => {
       <header>
         <div className="container">
           <div className="logo">
-            <img src={WeatherIcon} alt="WeatherApp" className="logo-img" />
-            <span>WeatherApp</span>
+            <img src={WeatherIcon} alt="Weatherly" className="logo-img" />
+            <span>Weatherly</span>
           </div>
 
           <button className="hamburger" onClick={() => setMenuOpen(!menuOpen)}>
-            ☰
+            {menuOpen ? "✕" : "☰"}
           </button>
 
           <nav className={`nav-links ${menuOpen ? "open" : ""}`}>
             {links.map((link) => (
-              <Link key={link.path} to={link.path}>
-                <span className="link-icon">{link.icon}</span>
+              <Link
+                key={link.name}
+                to={link.path}
+                className="nav-link"
+                onClick={handleLinkClick} // fecha menu ao clicar
+              >
+                <img src={link.icon} alt={link.name} className="nav-icon" />
                 {link.name}
               </Link>
             ))}

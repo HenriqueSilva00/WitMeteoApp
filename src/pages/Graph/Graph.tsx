@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import {
   ResponsiveContainer,
   LineChart,
@@ -12,36 +12,49 @@ import { WeatherData } from "../../types";
 import "../../styles/Graph.css";
 
 interface GraphProps {
-  forecastFull: WeatherData[]; // todos os registros do forecast
-  unit: "metric" | "imperial"; // unidade atual
+  forecastFull: WeatherData[];
+  unit: "metric" | "imperial";
 }
 
 const Graph: React.FC<GraphProps> = ({ forecastFull, unit }) => {
-  const [selectedDay, setSelectedDay] = useState<string>(""); // dia selecionado YYYY-MM-DD
+  const today = new Date().toISOString().split("T")[0];
+  const [selectedDay, setSelectedDay] = useState<string>(today);
   const [dayData, setDayData] = useState<WeatherData[]>([]);
 
   const tempSymbol = unit === "metric" ? "°C" : "°F";
 
-  // cria array com os próximos 5 dias (YYYY-MM-DD) baseado em forecastFull
   const days: string[] = Array.from(
     new Set(forecastFull.map((f) => f.dt_txt.split(" ")[0]))
   );
 
-  // atualiza os dados do gráfico quando muda o dia selecionado
   useEffect(() => {
     if (!selectedDay) return;
-
-    const filtered = forecastFull.filter((f: WeatherData) =>
+    const filtered = forecastFull.filter((f) =>
       f.dt_txt.startsWith(selectedDay)
     );
     setDayData(filtered);
   }, [selectedDay, forecastFull]);
-  console.log(forecastFull);
+
+  useEffect(() => {
+    if (!selectedDay && days.includes(today)) {
+      setSelectedDay(today);
+    }
+  }, [days, selectedDay, today]);
+
+  // 🔹 Calcula limites dinâmicos do eixo Y
+  const [yMin, yMax] = useMemo(() => {
+    if (dayData.length === 0) return [0, 0];
+    const temps = dayData.map((d) => d.main.temp);
+    const min = Math.min(...temps);
+    const max = Math.max(...temps);
+    const padding = 2; // 🔹 margem extra de 2 graus
+    return [Math.floor(min - padding), Math.ceil(max + padding)];
+  }, [dayData]);
+
   return (
     <section className="graph-section">
-      {/* Header: título + seletor */}
       <div className="graph-header">
-        <h1>Temperature Evolution</h1>
+        <h1>📈 Hourly Forecast</h1>
 
         <div className="day-selector">
           <label htmlFor="day">Select a day: </label>
@@ -63,10 +76,9 @@ const Graph: React.FC<GraphProps> = ({ forecastFull, unit }) => {
         </div>
       </div>
 
-      {/* Container do gráfico */}
       <div className="graph-container">
         {dayData.length > 0 ? (
-          <ResponsiveContainer width="100%" height={500}>
+          <ResponsiveContainer width="100%" height="100%">
             <LineChart data={dayData}>
               <CartesianGrid strokeDasharray="3 3" />
               <XAxis
@@ -74,6 +86,7 @@ const Graph: React.FC<GraphProps> = ({ forecastFull, unit }) => {
                 tickFormatter={(val) => val.split(" ")[1].slice(0, 5)}
               />
               <YAxis
+                domain={[yMin, yMax]} // 🔹 domínio dinâmico
                 label={{
                   value: `Temp (${tempSymbol})`,
                   angle: -90,
@@ -81,6 +94,25 @@ const Graph: React.FC<GraphProps> = ({ forecastFull, unit }) => {
                 }}
               />
               <Tooltip
+                cursor={{ stroke: "#1a70f1", strokeWidth: 1, opacity: 0.3 }}
+                wrapperStyle={{
+                  pointerEvents: "none", // 🔹 evita interferência no cursor
+                  position: "absolute", // 🔹 não afeta layout
+                }}
+                contentStyle={{
+                  backgroundColor: "#202b3c",
+                  border: "1px solid #1a70f1",
+                  borderRadius: "10px",
+                  color: "#d2d9e2",
+                  boxShadow: "0 4px 12px rgba(0,0,0,0.3)",
+                }}
+                labelStyle={{
+                  color: "#1a70f1",
+                  fontWeight: 600,
+                }}
+                itemStyle={{
+                  color: "#d2d9e2",
+                }}
                 labelFormatter={(val) => `Time: ${val.split(" ")[1]}`}
                 formatter={(value: number) => [
                   `${value.toFixed(1)}${tempSymbol}`,
@@ -90,14 +122,24 @@ const Graph: React.FC<GraphProps> = ({ forecastFull, unit }) => {
               <Line
                 type="monotone"
                 dataKey={(d: WeatherData) => d.main.temp}
-                stroke="#8884d8"
-                strokeWidth={2}
-                dot={{ r: 3 }}
+                stroke="#1a70f1" // 🔹 azul principal
+                strokeWidth={3} // linha mais espessa
+                dot={{
+                  r: 4,
+                  stroke: "#1a70f1",
+                  strokeWidth: 2,
+                  fill: "#202b3c",
+                }}
+                activeDot={{ r: 6, fill: "#1a70f1", strokeWidth: 0 }}
+                strokeLinejoin="round" // 🔹 cantos suavizados
+                strokeLinecap="round" // 🔹 terminações arredondadas
               />
             </LineChart>
           </ResponsiveContainer>
         ) : (
-          <p>No data available for this day.</p>
+          <p className="placeholder">
+            Please search a valid city to see the graph.
+          </p>
         )}
       </div>
     </section>

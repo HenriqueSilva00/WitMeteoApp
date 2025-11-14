@@ -1,15 +1,18 @@
-import React, { useState, useEffect, SetStateAction, Dispatch } from "react";
+import React, { useState, useEffect } from "react";
 import "../../styles/Forecast.css";
 import { WeatherData } from "../../types";
+import NotFoundImg from "../../assets/404NotFound.png";
 
 interface ForecastProps {
   city: string;
-  forecast: WeatherData[]; // 12h00 para forecast
+  forecast: WeatherData[];
+  forecastFull: WeatherData[];
   setForecast: React.Dispatch<React.SetStateAction<WeatherData[]>>;
-  forecastFull: WeatherData[]; // todos os registros
   setForecastFull: React.Dispatch<React.SetStateAction<WeatherData[]>>;
   unit: "metric" | "imperial";
   setUnit: React.Dispatch<React.SetStateAction<"metric" | "imperial">>;
+  loading: boolean;
+  error: string;
 }
 
 const API_KEY = "73122f48cfc4498f9761ce606145d571";
@@ -17,71 +20,51 @@ const API_KEY = "73122f48cfc4498f9761ce606145d571";
 const Forecast: React.FC<ForecastProps> = ({
   city,
   forecast,
-  setForecast,
-  forecastFull,
-  setForecastFull,
   unit,
   setUnit,
+  loading,
+  error,
 }) => {
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState("");
-
-  useEffect(() => {
-    if (!city) return;
-
-    const fetchForecast = async () => {
-      setLoading(true);
-      setError("");
-      try {
-        const res = await fetch(
-          `https://api.openweathermap.org/data/2.5/forecast?q=${city}&appid=${API_KEY}&units=${unit}&lang=en`
-        );
-        const data = await res.json();
-
-        if (data.cod !== "200") {
-          setError(data.message);
-        } else {
-          // Adiciona coordenadas a cada item do forecast
-          const forecastWithCoord: WeatherData[] = data.list.map(
-            (item: any) => ({
-              ...item,
-              coord: {
-                lat: data.city.coord.lat,
-                lon: data.city.coord.lon,
-              },
-            })
-          );
-
-          // Guarda todos os registros para o gráfico (com coordenadas)
-          setForecastFull(forecastWithCoord);
-
-          // Pega apenas o registro das 12h00 para o forecast diário
-          const dailyNoon = forecastWithCoord.filter((f) =>
-            f.dt_txt.includes("12:00:00")
-          );
-          setForecast(dailyNoon.slice(0, 5));
-        }
-      } catch (err) {
-        setError("Error fetching data.");
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchForecast();
-  }, [city, unit, setForecast, setForecastFull]);
-
+  const [currentTime, setCurrentTime] = useState(new Date());
   const tempSymbol = unit === "metric" ? "°C" : "°F";
-
+  useEffect(() => {
+    const interval = setInterval(() => setCurrentTime(new Date()), 1000);
+    return () => clearInterval(interval);
+  }, []);
   if (loading) return <p className="loading">Loading forecast...</p>;
-  if (error) return <p className="error">Error: {error}</p>;
+
+  if (error) {
+    return (
+      <div className="forecast-error-container">
+        <img
+          src={NotFoundImg}
+          alt="Error 404 - City not Found"
+          className="forecast-error-img"
+        />
+        <div className="forecast-error-text">
+          <p>We could not fetch the weather forecast for the requested city.</p>
+          <p>Please check the city name and try again.</p>
+          <p>
+            <em>Perhaps "{city}" does not exist.</em>
+          </p>
+        </div>
+      </div>
+    );
+  }
   if (!forecast.length)
     return <p className="info">Search a city to see the forecast.</p>;
 
   return (
     <section className="forecast-section">
       <div className="forecast-header">
-        <h1>📍{city}</h1>
+        <h1>
+          📍{city} -{" "}
+          {new Date().toLocaleTimeString([], {
+            hour: "2-digit",
+            minute: "2-digit",
+            second: "2-digit",
+          })}
+        </h1>
         <div className="unit-toggle" data-unit={unit}>
           <span
             className={`toggle-option ${unit === "metric" ? "active" : ""}`}

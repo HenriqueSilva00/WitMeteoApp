@@ -1,18 +1,40 @@
-html,
-body,
-#root {
-  height: 100%;
-  margin: 0;
-  padding: 0;
-}
-
 .map-container {
   width: 100%;
-  height: 90vh; /* ocupa 100% da altura da viewport */
-  margin-top: 4rem;
+  height: 90vh; /* ocupa quase toda a altura da viewport */
+  padding: 8rem 3rem 3rem 3rem; /* top right bottom left */
+  box-sizing: border-box; /* garante que padding não aumente a largura/altura */
+  border-radius: 1rem; /* cantos arredondados */
+  overflow: hidden; /* evita que o mapa "vaze" dos cantos arredondados */
 }
 
 .leaflet-container {
   width: 100%;
   height: 100%;
+  border-radius: 1rem; /* aplica cantos arredondados também no container do Leaflet */
+}
+
+/* Tablets (largura até 1024px) */
+@media (max-width: 1024px) {
+  .map-container {
+    padding: 8rem 2rem 2rem 2rem;
+    border-radius: 0.8rem;
+    height: 93vh;
+  }
+
+  .leaflet-container {
+    border-radius: 0.8rem;
+  }
+}
+
+/* Mobile (largura até 768px) */
+@media (max-width: 768px) {
+  .map-container {
+    padding: 7rem 1.5rem 1.5rem 1.5rem;
+    border-radius: 0.5rem;
+    height: 90vh;
+  }
+
+  .leaflet-container {
+    border-radius: 0.5rem;
+  }
 }

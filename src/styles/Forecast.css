@@ -97,20 +97,29 @@
 }
 
 .forecast-card {
-  background-color: #202b3c;
+  background: linear-gradient(
+    to bottom,
+    #1b2535,
+    #2a3a57
+  ); /* gradiente suave do topo para baixo */
   padding: 1rem;
   border-radius: 12px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
   width: 270px;
   text-align: center;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.3s ease; /* transições suaves */
 }
 
+/* efeito hover opcional */
 .forecast-card:hover {
-  transform: translateY(-6px);
-  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25);
+  transform: translateY(-5px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+  background: linear-gradient(
+    to bottom,
+    #1e2a40,
+    #374b6d
+  ); /* gradiente ligeiramente diferente ao hover */
 }
-
 .forecast-card img {
   width: 80px;
   height: 80px;
@@ -143,6 +152,30 @@
   text-align: left;
 }
 
+.forecast-error-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh; /* ocupa toda a altura da viewport */
+  text-align: center;
+  padding: 0 1rem; /* espaço lateral opcional */
+}
+
+.forecast-error-img {
+  width: 350px;
+  opacity: 0.85;
+  margin-bottom: 1rem;
+  opacity: 0.6;
+}
+
+.forecast-error-text {
+  color: #cc0000;
+  font-size: 1.2rem;
+  font-weight: 500;
+  margin: 0; /* remove margens extras */
+}
+
 /* === RESPONSIVIDADE === */
 
 /* TABLET - até 1024px */
@@ -162,9 +195,12 @@
     height: 36px;
   }
 
+  .forecast-grid {
+    height: 76vh;
+  }
+
   .toggle-slider {
-    height: 32px;
-    width: 46%;
+    width: 50%;
   }
 
   .forecast-grid {
@@ -200,6 +236,10 @@
     width: 250px;
     height: 36px;
     margin-top: 0rem;
+  }
+
+  .forecast-grid {
+    padding-bottom: 6rem;
   }
 
   .toggle-slider {

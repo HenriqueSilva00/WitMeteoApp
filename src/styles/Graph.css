@@ -1,72 +1,114 @@
 .graph-section {
   width: 100%;
-  height: auto;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  box-sizing: border-box;
-  background-color: #f8f8f8;
+  height: 100vh;
 }
 
 /* Header com título e seletor */
 .graph-header {
-  width: 100%;
   display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  margin-top: 4.5rem;
+  justify-content: space-between;
+  align-items: center;
   margin-bottom: 3rem;
+  flex-wrap: wrap;
 }
 
 .graph-header h1 {
   font-size: 1.8rem;
   font-weight: 600;
-  color: #1b3b6f;
-  margin-top: 2.5rem;
-  margin-left: 1.5rem;
+  color: #d4dce5;
+  margin-top: 8rem;
+  margin-left: 7rem;
 }
 
 /* Seletor logo abaixo do título */
 .day-selector {
+  position: relative;
   display: flex;
   align-items: center;
+  justify-content: center;
   gap: 1rem;
-  margin-left: 1.5rem;
+  margin-top: 7rem;
+  margin-right: 7rem;
+  cursor: pointer;
+  user-select: none;
 }
 
 .day-selector label {
-  font-weight: bold;
-  color: #555;
+  font-weight: 600;
+  color: #d4dce5;
+  letter-spacing: 0.5px;
 }
 
+/* Caixa de seleção moderna */
 .day-selector select {
-  padding: 0.5rem 1rem;
-  border-radius: 6px;
-  border: 1px solid #ccc;
-  background-color: #f9f9f9;
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  padding: 0.6rem 2.5rem 0.6rem 1rem;
+  border: 1px solid #2a3446;
+  border-radius: 12px; /* 🔹 mais arredondado e suave */
+  color: #d2d9e2;
   font-size: 1rem;
-  transition: all 0.2s ease-in-out;
+  font-weight: 500;
+  transition: all 0.25s ease-in-out;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.25); /* 🔹 sombra leve */
+  cursor: pointer;
+  background-image: linear-gradient(to bottom, #202b3c, #0b121e);
+  min-width: 10rem;
 }
 
+/* Ícone de seta personalizado */
+.day-selector select::after {
+  content: "▼";
+  position: absolute;
+  right: 1rem;
+  pointer-events: none;
+}
+
+/* Hover e foco */
 .day-selector select:hover {
-  border-color: #8884d8;
-  background-color: #fff;
+  border-color: #1a70f1;
+  background-color: #0b121e;
+  box-shadow: 0 4px 10px rgba(26, 112, 241, 0.25); /* 🔹 reflexo azulado */
 }
 
-/* Container do gráfico */
+.day-selector select:focus {
+  outline: none;
+  border-color: #1a70f1;
+  box-shadow: 0 0 0 3px rgba(26, 112, 241, 0.3);
+}
+
 .graph-container {
-  width: 100%;
+  background: linear-gradient(
+    to bottom,
+    #1b2535,
+    #293752
+  ); /* gradiente suave do topo para baixo */
+  width: 92%;
+  height: 60vh;
   border-radius: 10px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   padding: 1rem;
-  margin-top: 1rem;
   box-sizing: border-box;
+
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
+
+  margin: 0 auto; /* centra horizontalmente */
+  transition: background 0.3s ease, box-shadow 0.3s ease; /* transição suave */
 }
 
+/* efeito hover opcional */
+.graph-container:hover {
+  background: linear-gradient(
+    to bottom,
+    #1e2a40,
+    #243044
+  ); /* gradiente ligeiramente diferente */
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+}
 /* Wrapper do gráfico */
 .recharts-wrapper {
   width: 100%;
@@ -80,12 +122,34 @@
   height: 100% !important;
 }
 
+.placeholder {
+  font-size: 1.2rem;
+  color: #d2d9e2;
+}
+
 /* ============================= */
 /* RESPONSIVIDADE */
 /* ============================= */
 
 /* Tablets (<=1024px) */
 @media (max-width: 1024px) {
+  .graph-container {
+    background-color: antiquewhite;
+    height: 50vh; /* ocupa cerca de 65% da altura da viewport */
+  }
+
+  .graph-container .recharts-responsive-container {
+    height: 100vh !important; /* assegura que o gráfico ocupa o container */
+  }
+
+  .graph-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+    flex-wrap: wrap;
+  }
+
   .graph-header h1 {
     font-size: 1.6rem;
     margin-left: 1rem;
@@ -98,13 +162,18 @@
   }
 
   .day-selector select {
-    font-size: 0.95rem;
     padding: 0.45rem 0.9rem;
   }
 
+  .day-selector select:hover {
+    border-color: #1a70f1;
+    background-color: #0b121e;
+    box-shadow: 0 4px 10px rgba(26, 112, 241, 0.25); /* 🔹 reflexo azulado */
+  }
+
   .graph-container {
-    height: 32rem;
-    padding: 0.8rem;
+    height: 75vh;
+    padding: 0.2rem;
   }
 
   .recharts-wrapper {
@@ -114,10 +183,14 @@
 
 /* Telemóveis (<=768px) */
 @media (max-width: 768px) {
+  .graph-container {
+    height: 50vh; /* ocupa cerca de 65% da altura da viewport */
+  }
+
   .graph-header {
     align-items: center;
     text-align: center;
-    margin-top: 3.5rem;
+    padding-top: 3.5rem;
   }
 
   .graph-header h1 {
@@ -126,9 +199,8 @@
   }
 
   .day-selector {
-    flex-direction: column;
     align-items: center;
-    margin: 0 auto;
+    margin-top: 1rem;
     gap: 0.8rem;
   }
 
@@ -137,15 +209,25 @@
   }
 
   .day-selector select {
-    font-size: 0.9rem;
-    padding: 0.4rem 0.8rem;
+    font-size: 0.95rem;
+    padding: 0.4rem 0.4rem;
+    min-width: 8rem;
   }
 
   .graph-container {
-    padding: 0.6rem;
-  }
+    background-color: #202b3c;
+    width: 92%;
+    height: 55vh;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    padding: 1rem;
+    box-sizing: border-box;
 
-  .recharts-wrapper {
-    height: 22rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    margin: 0 auto; /* 🔹 centra horizontalmente */
   }
 }

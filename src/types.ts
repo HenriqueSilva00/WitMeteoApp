@@ -1,4 +1,5 @@
 export interface WeatherData {
+  dt: number;
   dt_txt: string;
   main: {
     temp: number;

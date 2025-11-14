@@ -1,11 +1,9 @@
 .header-wrapper {
   position: fixed;
-  top: 0.8rem;
   left: 0.5rem;
   right: 0.5rem;
   height: 70px; /* altura do header */
-  background-color: #202b3c; /* mesma cor do header */
-  border-radius: 20px;
+  background-color: #0b121e;
   z-index: 999; /* atrás do header */
 }
 
@@ -62,28 +60,36 @@ header .container {
 }
 
 .nav-links a {
-  display: inline-block; /* para aplicar padding corretamente */
+  display: flex; /* alinha ícone + texto */
+  justify-content: center;
+  align-items: center; /* verticalmente centrado */
+  gap: 0.4rem; /* espaço menor entre ícone e texto */
   text-decoration: none;
   color: #d2d9e2;
-  font-weight: normal;
+  font-weight: 500;
   transition: background-color 0.2s, color 0.2s;
-  padding: 7px 16px; /* espaçamento interno do botão */
-  margin: 0 8px; /* espaço entre os botões */
-  border-radius: 12px; /* cantos arredondados */
-  background-color: rgba(255, 255, 255, 0.1); /* cor leve de fundo */
+  padding: 6px 12px; /* reduzido para ajustar proporção */
+  margin: 0 6px;
+  border-radius: 12px;
+  background-color: rgba(255, 255, 255, 0.1);
+  font-size: 0.9rem; /* texto ligeiramente menor */
 }
 
 .nav-links a:hover {
   background-color: #0b121e;
   color: #d2d9e2;
-  text-decoration: none; /* remove underline, pois o hover agora é background */
+  text-decoration: none; /* remove underline */
 }
 
 .nav-links a.active {
   font-weight: 600;
   background-color: #10161fc4;
 }
-
+.nav-links a img.nav-icon {
+  width: 18px; /* reduzido para caber melhor no botão */
+  height: 18px;
+  object-fit: contain;
+}
 /* Barra de pesquisa */
 .search-form {
   display: flex;
