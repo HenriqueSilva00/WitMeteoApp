@@ -1,19 +1,20 @@
 {
   "files": {
-    "main.css": "/WitMeteoApp/static/css/main.80ad5d1f.css",
-    "main.js": "/WitMeteoApp/static/js/main.711e6883.js",
+    "main.css": "/WitMeteoApp/static/css/main.c5dfe024.css",
+    "main.js": "/WitMeteoApp/static/js/main.4461ef3a.js",
     "static/js/453.33192b8a.chunk.js": "/WitMeteoApp/static/js/453.33192b8a.chunk.js",
     "static/media/404NotFound.png": "/WitMeteoApp/static/media/404NotFound.aee900f1439b24ebc5d4.png",
     "static/media/Forecast.png": "/WitMeteoApp/static/media/Forecast.ce842148ee339509e7dc.png",
+    "static/media/github.png": "/WitMeteoApp/static/media/github.553c66159c5672f25df6.png",
     "static/media/WeatherIcon.png": "/WitMeteoApp/static/media/WeatherIcon.1696ba5266d6eec123a5.png",
     "static/media/Map.png": "/WitMeteoApp/static/media/Map.a4848ff12f14d59c393a.png",
     "index.html": "/WitMeteoApp/index.html",
-    "main.80ad5d1f.css.map": "/WitMeteoApp/static/css/main.80ad5d1f.css.map",
-    "main.711e6883.js.map": "/WitMeteoApp/static/js/main.711e6883.js.map",
+    "main.c5dfe024.css.map": "/WitMeteoApp/static/css/main.c5dfe024.css.map",
+    "main.4461ef3a.js.map": "/WitMeteoApp/static/js/main.4461ef3a.js.map",
     "453.33192b8a.chunk.js.map": "/WitMeteoApp/static/js/453.33192b8a.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.80ad5d1f.css",
-    "static/js/main.711e6883.js"
+    "static/css/main.c5dfe024.css",
+    "static/js/main.4461ef3a.js"
   ]
 }
