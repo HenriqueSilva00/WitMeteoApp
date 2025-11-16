@@ -58,7 +58,7 @@ const Forecast: React.FC<ForecastProps> = ({
     <section className="forecast-section">
       <div className="forecast-header">
         <h1>
-          📍{city} -{" "}
+          📍{city.charAt(0).toUpperCase() + city.slice(1).toLowerCase()} -{" "}
           {new Date().toLocaleTimeString([], {
             hour: "2-digit",
             minute: "2-digit",
@@ -85,7 +85,7 @@ const Forecast: React.FC<ForecastProps> = ({
       <div className="forecast-grid">
         {forecast.map((f) => {
           const windSpeed =
-            unit === "metric" ? f.wind.speed * 3.6 : f.wind.speed; // km/h or mph
+            unit === "metric" ? f.wind.speed * 3.6 : f.wind.speed; // conversão métrica
           const visibility =
             unit === "metric"
               ? (f.visibility / 1000).toFixed(1) + " km"

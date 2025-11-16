@@ -62,7 +62,7 @@ const MapView: React.FC<MapViewProps> = ({ forecastFull, unit }) => {
       if (points.length > 0) {
         map.setView([points[0][0], points[0][1]], 12, { animate: true });
       } else {
-        map.setView([40.0, -8.0], 5, { animate: true }); // fallback se não houver pontos
+        map.setView([40.0, -8.0], 5, { animate: true });
       }
     }, [points, map]);
     return null;

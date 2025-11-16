@@ -26,7 +26,7 @@ const Navbar: React.FC<NavbarProps> = ({ setCity, menuOpen, setMenuOpen }) => {
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
     if (!query) return;
-    setCity(query); // envia para o App
+    setCity(query); // envia para a App
     setLastCity(query);
     setQuery("");
     setMenuOpen(false); // fecha o menu após a pesquisa
@@ -55,7 +55,7 @@ const Navbar: React.FC<NavbarProps> = ({ setCity, menuOpen, setMenuOpen }) => {
                 key={link.name}
                 to={link.path}
                 className="nav-link"
-                onClick={handleLinkClick} // fecha menu ao clicar
+                onClick={handleLinkClick} // fecha menu ao clicar numa opção
               >
                 <img src={link.icon} alt={link.name} className="nav-icon" />
                 {link.name}

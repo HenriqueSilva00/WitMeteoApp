@@ -10,13 +10,16 @@ import {
 } from "recharts";
 import { WeatherData } from "../../types";
 import "../../styles/Graph.css";
+import NotFoundImg from "../../assets/404NotFound.png";
 
 interface GraphProps {
+  city: string;
   forecastFull: WeatherData[];
   unit: "metric" | "imperial";
+  error: string;
 }
 
-const Graph: React.FC<GraphProps> = ({ forecastFull, unit }) => {
+const Graph: React.FC<GraphProps> = ({ forecastFull, unit, error, city }) => {
   const today = new Date().toISOString().split("T")[0];
   const [selectedDay, setSelectedDay] = useState<string>(today);
   const [dayData, setDayData] = useState<WeatherData[]>([]);
@@ -34,7 +37,6 @@ const Graph: React.FC<GraphProps> = ({ forecastFull, unit }) => {
     );
     setDayData(filtered);
   }, [selectedDay, forecastFull]);
-
   useEffect(() => {
     if (!selectedDay && days.includes(today)) {
       setSelectedDay(today);
@@ -50,6 +52,25 @@ const Graph: React.FC<GraphProps> = ({ forecastFull, unit }) => {
     const padding = 2; // 🔹 margem extra de 2 graus
     return [Math.floor(min - padding), Math.ceil(max + padding)];
   }, [dayData]);
+
+  if (error || forecastFull.length === 0) {
+    return (
+      <div className="forecast-error-container">
+        <img
+          src={NotFoundImg}
+          alt="Error 404 - City not Found"
+          className="forecast-error-img"
+        />
+        <div className="forecast-error-text">
+          <p>We could not retrieve daily forecast data for the chosen city</p>
+          <p>Please check the city name and try again.</p>
+          <p>
+            <em>Perhaps "{city}" does not exist.</em>
+          </p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <section className="graph-section">
@@ -86,7 +107,7 @@ const Graph: React.FC<GraphProps> = ({ forecastFull, unit }) => {
                 tickFormatter={(val) => val.split(" ")[1].slice(0, 5)}
               />
               <YAxis
-                domain={[yMin, yMax]} // 🔹 domínio dinâmico
+                domain={[yMin, yMax]}
                 label={{
                   value: `Temp (${tempSymbol})`,
                   angle: -90,
@@ -96,8 +117,8 @@ const Graph: React.FC<GraphProps> = ({ forecastFull, unit }) => {
               <Tooltip
                 cursor={{ stroke: "#1a70f1", strokeWidth: 1, opacity: 0.3 }}
                 wrapperStyle={{
-                  pointerEvents: "none", // 🔹 evita interferência no cursor
-                  position: "absolute", // 🔹 não afeta layout
+                  pointerEvents: "none", //evita interferência no cursor
+                  position: "absolute", // não afeta layout
                 }}
                 contentStyle={{
                   backgroundColor: "#202b3c",
@@ -122,8 +143,8 @@ const Graph: React.FC<GraphProps> = ({ forecastFull, unit }) => {
               <Line
                 type="monotone"
                 dataKey={(d: WeatherData) => d.main.temp}
-                stroke="#1a70f1" // 🔹 azul principal
-                strokeWidth={3} // linha mais espessa
+                stroke="#1a70f1"
+                strokeWidth={3}
                 dot={{
                   r: 4,
                   stroke: "#1a70f1",
@@ -131,8 +152,8 @@ const Graph: React.FC<GraphProps> = ({ forecastFull, unit }) => {
                   fill: "#202b3c",
                 }}
                 activeDot={{ r: 6, fill: "#1a70f1", strokeWidth: 0 }}
-                strokeLinejoin="round" // 🔹 cantos suavizados
-                strokeLinecap="round" // 🔹 terminações arredondadas
+                strokeLinejoin="round"
+                strokeLinecap="round"
               />
             </LineChart>
           </ResponsiveContainer>

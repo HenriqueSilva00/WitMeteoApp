@@ -1,5 +1,10 @@
 import React, { useState, useEffect, SetStateAction, Dispatch } from "react";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Navigate,
+} from "react-router-dom";
 import Navbar from "./components/NavBar";
 import Footer from "./components/Footer";
 import Forecast from "./pages/Forecast/Forecast";
@@ -33,11 +38,12 @@ const App: React.FC = () => {
 
         if (data.cod !== "200") {
           setError(data.message);
+          setForecast([]);
+          setForecastFull([]); // 🔹 Limpa os dados antigos
         } else {
           const forecastWithCoord = data.list.map((item: any) => ({
             ...item,
             coord: { lat: data.city.coord.lat, lon: data.city.coord.lon },
-            timezone: data.city.timezone,
           }));
           setForecastFull(forecastWithCoord);
           const dailyNoon = forecastWithCoord.filter((f: any) =>
@@ -47,6 +53,8 @@ const App: React.FC = () => {
         }
       } catch {
         setError("Error fetching data.");
+        setForecast([]);
+        setForecastFull([]); // 🔹 Limpa também aqui
       } finally {
         setLoading(false);
       }
@@ -57,7 +65,7 @@ const App: React.FC = () => {
 
   return (
     <Router>
-      <div className="min-h-screen flex flex-col bg-gray-50">
+      <div className="min-h-screen flex flex-col">
         {/* Passa setCity para o Navbar */}
         <Navbar
           setCity={setCity}
@@ -85,12 +93,26 @@ const App: React.FC = () => {
             />
             <Route
               path="/graph"
-              element={<Graph forecastFull={forecastFull} unit={"metric"} />}
+              element={
+                <Graph
+                  city={city}
+                  forecastFull={forecastFull}
+                  unit={"metric"}
+                  error={error}
+                />
+              }
             />
             <Route
               path="/map"
-              element={<MapView forecastFull={forecastFull} unit={"metric"} />}
+              element={
+                <MapView
+                  forecastFull={forecastFull}
+                  unit={"metric"}
+                  error={error}
+                />
+              }
             />
+            <Route path="*" element={<Navigate to="/" replace />} />
           </Routes>
         </main>
 

@@ -156,7 +156,6 @@ header .container {
   /* Quando o menu está aberto */
   .nav-links.open {
     max-height: 400px; /* ⬆️ aumenta este valor conforme o nº de links */
-    padding-bottom: 1rem; /* ✅ cria o espaço vazio no fundo */
   }
 
   .nav-links a {
@@ -180,23 +179,6 @@ header .container {
     box-sizing: border-box; /* inclui padding e border na largura */
     padding: 0.5rem; /* padding igual para ambos */
     margin-bottom: 0.5rem; /* espaçamento entre input e botão */
-  }
-}
-
-/* Tablets 769px até 1024px */
-@media (min-width: 769px) and (max-width: 1024px) {
-  .logo {
-    font-size: 1.9rem;
-  }
-
-  .nav-links {
-    flex-direction: row;
-  }
-}
-
-/* Desktop acima de 1024px */
-@media (min-width: 1025px) {
-  .logo {
-    font-size: 2rem;
+    font-size: 16px;
   }
 }
