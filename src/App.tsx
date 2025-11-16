@@ -1,4 +1,4 @@
-import React, { useState, useEffect, SetStateAction, Dispatch } from "react";
+import React, { useState, useEffect } from "react";
 import {
   BrowserRouter as Router,
   Routes,
@@ -11,6 +11,7 @@ import Forecast from "./pages/Forecast/Forecast";
 import Graph from "./pages/Graph/Graph";
 import MapView from "./pages/Map/MapView";
 import { WeatherData } from "./types";
+import "./App.css";
 
 const App: React.FC = () => {
   const [city, setCity] = useState("Londres"); // cidade selecionada
@@ -18,8 +19,6 @@ const App: React.FC = () => {
   const [unit, setUnit] = useState<"metric" | "imperial">("metric"); // unidade de temperatura
   const [forecastFull, setForecastFull] = useState<WeatherData[]>([]); // todos os registros para o gráfico
   const [menuOpen, setMenuOpen] = useState(false);
-  const [searchError, setSearchError] = useState("");
-
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const API_KEY = "73122f48cfc4498f9761ce606145d571";
@@ -65,7 +64,7 @@ const App: React.FC = () => {
 
   return (
     <Router>
-      <div className="min-h-screen flex flex-col">
+      <div id="root" className="min-h-screen flex flex-col bg-gray-50">
         {/* Passa setCity para o Navbar */}
         <Navbar
           setCity={setCity}

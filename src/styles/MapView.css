@@ -16,7 +16,7 @@
 /* Tablets (largura até 1024px) */
 @media (max-width: 1024px) {
   .map-container {
-    padding: 8rem 2rem 2rem 2rem;
+    padding: 8rem 3rem 3rem 3rem;
     border-radius: 0.8rem;
     height: 93vh;
   }

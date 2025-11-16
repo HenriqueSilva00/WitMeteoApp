@@ -5,7 +5,7 @@ footer {
   padding: 1rem 0;
   box-shadow: 0 -1px 0 #d2d9e2;
   font-size: 0.9rem;
-  margin-top: auto;
+
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -25,4 +25,21 @@ footer p:last-child {
   font-weight: 400;
   color: #a3b0c0;
   font-size: 0.85rem;
+}
+
+.footer-icons {
+  margin-top: 1rem;
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.footer-icon {
+  width: 32px;
+  height: 32px;
+  transition: transform 0.2s;
+}
+
+.footer-icon:hover {
+  transform: scale(1.1);
 }

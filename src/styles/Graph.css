@@ -192,6 +192,7 @@
 
   .day-selector {
     width: 100%;
+    max-width: 12rem;
     flex-direction: column;
     align-items: flex-start;
     margin-top: 1rem;
@@ -212,7 +213,7 @@
   .graph-container {
     background-color: #202b3c;
     width: 92%;
-    height: 55vh;
+    height: 60vh;
     border-radius: 10px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
     padding: 1rem 0.5rem;

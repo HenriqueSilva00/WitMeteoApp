@@ -41,8 +41,10 @@ const Navbar: React.FC<NavbarProps> = ({ setCity, menuOpen, setMenuOpen }) => {
       <header>
         <div className="container">
           <div className="logo">
-            <img src={WeatherIcon} alt="Weatherly" className="logo-img" />
-            <span>Weatherly</span>
+            <Link to="/forecast" className="logo-link">
+              <img src={WeatherIcon} alt="Weatherly" className="logo-img" />
+              <span>Weatherly</span>
+            </Link>
           </div>
 
           <button className="hamburger" onClick={() => setMenuOpen(!menuOpen)}>

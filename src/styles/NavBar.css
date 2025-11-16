@@ -2,16 +2,16 @@
   position: fixed;
   left: 0.5rem;
   right: 0.5rem;
-  height: 70px; /* altura do header */
+  height: 70px;
   background-color: #0b121e;
-  z-index: 999; /* atrás do header */
+  z-index: 999;
 }
 
 header {
   position: fixed;
   top: 0.8rem;
-  left: 0.5rem; /* espaço à esquerda */
-  right: 0.5rem; /* espaço à direita */
+  left: 0.5rem;
+  right: 0.5rem;
   padding: 1rem 2rem;
   background-color: #202b3c;
   border-radius: 20px;
@@ -32,23 +32,31 @@ header .container {
   font-weight: bold;
 }
 
+.logo-link {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  text-decoration: none;
+  color: inherit;
+}
+
 .link-icon {
   margin-right: 6px;
 }
 
 .logo-img {
-  width: 40px; /* ajusta o tamanho conforme necessário */
+  width: 40px;
   height: 40px;
   object-fit: contain;
   vertical-align: middle;
 }
 
 .logo span {
-  font-size: 1.6rem; /* tamanho do texto */
-  font-weight: 600; /* mais espesso para destaque */
-  color: #d2d9e2; /* branco (podes mudar se quiser contraste) */
-  letter-spacing: 1px; /* espaçamento entre letras */
-  text-transform: uppercase; /* opcional — todas maiúsculas */
+  font-size: 1.6rem;
+  font-weight: 600;
+  color: #d2d9e2;
+  letter-spacing: 1px;
+  text-transform: uppercase;
   margin-left: 1rem;
 }
 
@@ -60,37 +68,40 @@ header .container {
 }
 
 .nav-links a {
-  display: flex; /* alinha ícone + texto */
+  display: flex;
   justify-content: center;
-  align-items: center; /* verticalmente centrado */
-  gap: 0.4rem; /* espaço menor entre ícone e texto */
+  align-items: center;
+  gap: 0.4rem;
   text-decoration: none;
   color: #d2d9e2;
   font-weight: 500;
   transition: background-color 0.2s, color 0.2s;
-  padding: 6px 12px; /* reduzido para ajustar proporção */
+  padding: 6px 12px;
   margin: 0 6px;
   border-radius: 12px;
   background-color: rgba(255, 255, 255, 0.1);
-  font-size: 0.9rem; /* texto ligeiramente menor */
+  font-size: 0.9rem;
 }
 
 .nav-links a:hover {
   background-color: #0b121e;
   color: #d2d9e2;
-  text-decoration: none; /* remove underline */
+  text-decoration: none;
 }
 
 .nav-links a.active {
   font-weight: 600;
-  background-color: #10161fc4;
+  background-color: #1a70f1 !important; /* azul de destaque */
+  color: #ffffff !important;
+  box-shadow: 0 2px 6px rgba(26, 112, 241, 0.4); /* glow opcional */
 }
+
 .nav-links a img.nav-icon {
-  width: 18px; /* reduzido para caber melhor no botão */
+  width: 18px;
   height: 18px;
   object-fit: contain;
 }
-/* Barra de pesquisa */
+
 .search-form {
   display: flex;
   gap: 0.5rem;
@@ -155,30 +166,30 @@ header .container {
 
   /* Quando o menu está aberto */
   .nav-links.open {
-    max-height: 400px; /* ⬆️ aumenta este valor conforme o nº de links */
+    max-height: 400px;
   }
 
   .nav-links a {
-    width: 100%; /* largura ajustada e centrada */
+    width: 100%;
     text-align: center;
     padding: 0.5rem 0;
   }
 
   .search-form {
     width: 100%;
-    max-width: 300px; /* opcional: não fica enorme em telas grandes */
+    max-width: 300px;
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin: 0.3rem auto; /* centralizado */
+    margin: 0.3rem auto;
   }
 
   .search-form input,
   .search-form button {
-    width: 100%; /* ocupa toda a largura do form */
-    box-sizing: border-box; /* inclui padding e border na largura */
-    padding: 0.5rem; /* padding igual para ambos */
-    margin-bottom: 0.5rem; /* espaçamento entre input e botão */
+    width: 100%;
+    box-sizing: border-box;
+    padding: 0.5rem;
+    margin-bottom: 0.5rem;
     font-size: 16px;
   }
 }

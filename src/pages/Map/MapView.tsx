@@ -38,19 +38,29 @@ const Heatmap: React.FC<{ points: [number, number, number][] }> = ({
       heat.remove();
     };
   }, [map, points]);
-
+  console.log(points);
   return null;
 };
 
 const MapView: React.FC<MapViewProps> = ({ forecastFull, unit }) => {
+  const temps = forecastFull.map((d) => d.main.temp);
+  const maxTemp = Math.max(...temps);
+  const minTemp = Math.min(...temps);
+
   const points: [number, number, number][] = forecastFull
     .filter(
       (d) => d.coord && d.coord.lat !== undefined && d.coord.lon !== undefined
     )
-    .map((d) => {
-      const intensity =
+    .map((d, i) => {
+      const temp =
         unit === "metric" ? d.main.temp : (d.main.temp - 32) * (5 / 9);
-      return [d.coord.lat, d.coord.lon, intensity];
+      const intensity = (temp - minTemp) / (maxTemp - minTemp);
+
+      // Pequena variação para teste
+      const offsetLat = (Math.random() - 0.5) * 0.05;
+      const offsetLon = (Math.random() - 0.5) * 0.05;
+
+      return [d.coord.lat + offsetLat, d.coord.lon + offsetLon, intensity];
     });
 
   const cityCenter: [number, number] =
